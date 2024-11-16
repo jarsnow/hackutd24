@@ -1,7 +1,16 @@
 
-
-
+import { Box } from '@chakra-ui/react'
 
 export default function ReportPage() {
-    return <h1>Report Page</h1>
+    return (
+    <Box>
+        <Box>
+
+
+        </Box>
+
+        <Box>
+
+        </Box>
+    </Box>);
 }

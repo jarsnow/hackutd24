@@ -1,7 +1,16 @@
-
-
-
+import { Box } from '@chakra-ui/react'
 
 export default function DataPage() {
-    return <h1>Data Page</h1>
+    return (
+    <Box>
+        <Box>
+
+
+        </Box>
+
+        <Box>
+
+        </Box>
+    </Box>
+    );
 }
