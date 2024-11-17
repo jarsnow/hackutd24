@@ -4,6 +4,7 @@ import path from 'path';
 
 
 export default function formHandler(req: NextApiRequest, res: NextApiResponse){
+    console.log("made it here");
     
     if (req.method === 'POST'){
 
