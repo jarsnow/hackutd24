@@ -66,16 +66,24 @@ const fetchDataFromIPFS = async (folderCID: string) => {
           Report for MONTH:
         </p>
       </div>
+      <div className="w-full text-center rounded-md p-2 text-white">
       <button
-        className="border py-3 px-4 rounded-md"
+        className="border-4 py-3 px-4 rounded-lg text-white"
         type="button"
         disabled={fetching || !KWHCID}
         onClick={() => fetchDataFromIPFS(KWHCID)}
       >
         {fetching ? "Fetching..." : "Get Report"}
       </button>
+      </div>
       
-      <img src={file}/>
+        <div className='flex flex-wrap justify-evenly'>
+                    <img className='rounded-xl m-8 w-1/3' src={file}></img>
+                    <img className='rounded-xl m-8 w-1/2' src={file}></img>
+                    <img className='rounded-xl m-4 w-1/4' src='https://ichef.bbci.co.uk/images/ic/1920xn/p0k3rf8d.jpg.webp'></img>
+        </div>
+
+    
        
       {/*
         <div className="flex flex-wrap justify-evenly mt-4">

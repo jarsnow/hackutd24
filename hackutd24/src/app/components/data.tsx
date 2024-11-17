@@ -112,32 +112,12 @@ const Data: React.FC = () =>{
             </div>
             
             <main className="my-5 w-full min-h-screen m-auto flex flex-col items-center overflow-y-auto space-y-8">
-                    <input className="w-full max-w-xs text-center border border-white rounded-md p-2" type="file" onChange={handleChange} />
+                    <input className="w-full max-w-xs text-center border border-white rounded-md p-2 text-white" type="file" onChange={handleChange} />
 
-                    {/* form here? */}
-                    <form onSubmit={handleFormSubmission}>
-                        {Object.keys(formData).map((key) => (
-                            <div key={key}>
-                                <label>{key.replace(/([A-Z])/, ' $1')}</label>
-                                <input 
-                                    className="text-black rounded-md"
-                                    type="text"
-                                    name={key}
-                                    value={formData[key as keyof typeof formData ]}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </div>
-                        ))}
-                        <button 
-                        type="submit">
-                            Submit
-                        </button>
-                    </form>
-
+                    
 
                     <button 
-                        className="border py-3 px-4 rounded-md "
+                        className="border-4 py-3 px-4 rounded-lg text-white"
                         type="button" 
                         disabled={uploading || !file} 
                         onClick={() => pinImageToIPFS(file!)}>
