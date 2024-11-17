@@ -1,21 +1,17 @@
-import { NextResponse, type NextRequest } from "next/server";
-import { pinata } from "../../../../utils/config"
+import { PinataSDK } from "pinata-web3";
 
-export async function POST(request: NextRequest) {
+const pinata = new PinataSDK({
+  pinataJwt: process.env.PINATA_JWT!,
+  pinataGateway: "example-gateway.mypinata.cloud",
+});
+
+async function main() {
   try {
-    const data = await request.formData();
-    const file: File | null = data.get("file") as unknown as File;
-    const uploadData = await pinata.upload.file(file)
-    const url = await pinata.gateways.createSignedURL({
-		cid: uploadData.cid,
-		expires: 3600,
-	});
-    return NextResponse.json(url, { status: 200 });
-  } catch (e) {
-    console.log(e);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
+    const file = new File(["hello"], "Testing.txt", { type: "text/plain" });
+    const upload = await pinata.upload.file(file);
+    console.log(upload);
+  } catch (error) {
+    console.log(error);
   }
 }
+
