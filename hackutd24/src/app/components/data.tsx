@@ -3,7 +3,6 @@
 import React from 'react';
 import { useState } from 'react';
 import { useVisibilityContext } from "./visibilitycontext";
-import api from '@/app/api/formroute'
 
 const Data: React.FC = () =>{
     const { isDataVisible } = useVisibilityContext();
@@ -84,7 +83,7 @@ const Data: React.FC = () =>{
 
         e.preventDefault();
 
-        const response = await fetch('../../api/formroute', {
+        const response = await fetch('/api/files/formroute', {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -121,7 +120,7 @@ const Data: React.FC = () =>{
                             <div key={key}>
                                 <label>{key.replace(/([A-Z])/, ' $1')}</label>
                                 <input 
-                                    className="text-black"
+                                    className="text-black rounded-md"
                                     type="text"
                                     name={key}
                                     value={formData[key as keyof typeof formData ]}

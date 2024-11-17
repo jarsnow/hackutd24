@@ -5,6 +5,30 @@ import { useVisibilityContext } from "./visibilitycontext";
 const Report: React.FC = () => {
     const { isReportVisible } = useVisibilityContext();
 
+    
+
+    const fetchDataFromIPFS = async (folderCID: string) => {
+        
+        //need to obtain CID from the pythonAPI
+
+        //obtain gateway from the local environment 
+        const gatewayUrl = `${process.env.NEXT_PUBLIC_GATEWAY_URL}/ipfs/${folderCID}`;
+
+        try {
+            const response = await fetch(gatewayUrl);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch folder: ${response.statusText}`)
+            }
+            const folderContents = await response.text();
+            const file1 = 
+            console.log(folderContents);
+        } catch (error) {
+            console.log("Failed to upload image to IPFS: ", error);
+        } finally {
+            
+        }
+    }
+
     return (
 
         <div className={`${isReportVisible ? "block" : "hidden"} flex-1 bg-gray-100`}>
