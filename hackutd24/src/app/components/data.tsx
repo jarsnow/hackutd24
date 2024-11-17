@@ -10,6 +10,18 @@ const Data: React.FC = () =>{
     const [file, setFile] = useState<File>();
     const [url, setUrl] = useState("");
     const [uploading, setUploading] = useState(false);
+    const [formLoading, setFormLoading] = useState(false);
+
+    const [formData, setFormData] = useState({
+        state_name: '',
+        TYPEHUQ: '',
+        KWH: '',
+        KWHWTH: '',
+        KWHLGT: '',
+        KWHSPH: '',
+        KWHCOL: '',
+        KWHRFG: ''
+    })
 
 
     const pinImageToIPFS = async (file: File) => {
@@ -60,8 +72,32 @@ const Data: React.FC = () =>{
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFile(e.target?.files?.[0]);
     };
+
+    const handleFormSubmission = async (e: React.FormEvent) => {
+        setFormLoading(true);
+        e.preventDefault();
+
+        const response = await fetch('/api/create-csv', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({data: [formData]})
+        }
+
+        );
+
+        if (response.ok){
+            const result = await response.json();
+            console.log('CSV file created at: ', result.filePath);
+        } else {
+            console.error('Error in creating CSV file');
+        }
+
+
+        setFormLoading(false);
+    };
     
-    console.log("isDataVisible:", isDataVisible);
     return (
 
         <div className={`${isDataVisible ? "block" : "hidden"}
@@ -75,8 +111,111 @@ const Data: React.FC = () =>{
                     <input className="w-full max-w-xs text-center border border-white rounded-md p-2" type="file" onChange={handleChange} />
 
                     {/* form here? */}
-                    <form>
-                        
+                    <form onSubmit={handleFormSubmission}>
+                        <div>
+                            <label>
+                                State Name
+                            </label>
+                            <input 
+                            className="t"
+                            type="text"
+                            name="state_name"
+                            value={formData.state_name}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+                        <div>
+                            <label>
+                                TYPEHUQ
+                            </label>
+                            <input                             
+                            type="text"
+                            name="TYPEHUQ"
+                            value={formData.TYPEHUQ}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+
+                        <div>
+                            <label>
+                                KWH
+                            </label>
+                            <input
+                            type="text"
+                            name="KWH"
+                            value={formData.KWH}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+
+                        <div>
+                            <label>
+                                KWHWTH
+                            </label>
+                            <input
+                            type="text"
+                            name="KWHWTH"
+                            value={formData.KWHWTH}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+
+                        <div>
+                            <label>
+                                KWHLGT
+                            </label>
+                            <input
+                            type="text"
+                            name="KWHLGT"
+                            value={formData.KWHLGT}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+                        <div>
+                            <label>
+                                KWHSPH
+                            </label>
+                            <input
+                            type="text"
+                            name="KWHSPH"
+                            value={formData.KWHSPH}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+                        <div>
+                            <label>
+                                KWHCOL
+                            </label>
+                            <input
+                            type="text"
+                            name="KWHCOL"
+                            value={formData.KWHCOL}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+                        <div>
+                            <label>
+                                KWHRFG
+                            </label>
+                            <input
+                            type="text"
+                            name="KWHRFG"
+                            value={formData.KWHRFG}
+                            onChange={handleChange}
+                            required/>
+                        </div>
+
+                        <button 
+                        type="submit">
+                            Submit
+                        </button>
                     </form>
 
 

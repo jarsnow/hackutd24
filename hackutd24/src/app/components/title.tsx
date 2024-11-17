@@ -11,7 +11,7 @@ const Title: React.FC = () => {
         w-full flex-1 bg-gray-100 p-4 flex justify-center items-center h-full`}>
 
                 <p className="animate-fadein text-2xl font-bold text-6xl">
-                    Title Here
+                    Watt Wise
                 </p>
 
         </div>
