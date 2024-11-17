@@ -160,7 +160,7 @@ def upload_file(file_path):
         'file': open(file_path, 'rb'),
     }
     
-    response = requests.post(PINATA_API_URL, headers=headers, files=files)
+    response = requests.post('https://api.pinata.cloud/pinning/pinFileToIPFS', headers=headers, files=files)
     
     if response.status_code == 200:
         data = response.json()
