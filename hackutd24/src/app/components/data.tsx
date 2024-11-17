@@ -65,14 +65,14 @@ const Data: React.FC = () =>{
     return (
 
         <div className={`${isDataVisible ? "block" : "hidden"}
-            flex-1 bg-gray-100 w-full min-h-screen flex flex-col overscroll-none`}>
+            flex-1 bg-dark w-full min-h-screen flex flex-col overscroll-none`}>
             
-            <div className="overscroll-none overflow-x-hidden bg-white sticky top-0 shadow-md w-full p-4 content-center overflow-y-hidden">
-                <p className="w-full text-2xl font-bold text-center">Insert Data:</p>
+            <div className="overscroll-none overflow-x-hidden bg-lighter-dark sticky top-0 shadow-md w-full p-4 content-center overflow-y-hidden">
+                <p className="w-full text-2xl font-bold text-center text-white">Insert Data:</p>
             </div>
             
             <main className="my-5 w-full min-h-screen m-auto flex flex-col items-center overflow-y-auto space-y-8">
-                    <input className="w-full max-w-xs text-center border border-gray rounded-md p-2" type="file" onChange={handleChange} />
+                    <input className="w-full max-w-xs text-center border border-white rounded-md p-2" type="file" onChange={handleChange} />
 
                     {/* form here? */}
                     <form>
@@ -81,7 +81,7 @@ const Data: React.FC = () =>{
 
 
                     <button 
-                        className="border py-3 px-4 rounded-md"
+                        className="border py-3 px-4 rounded-md "
                         type="button" 
                         disabled={uploading || !file} 
                         onClick={() => pinImageToIPFS(file!)}>

@@ -16,12 +16,17 @@ const config: Config = {
     },
     colors: {
       'blue': '#37afe1',
-      'light-blue': '#4cc9fe',
+      'light-blue': '#aee0f5',
       'yellow': '#f5f4b3',
       'light-yellow': 'fffecb',
       'black': '#000000',
       'blue-white': '#f2f7fa',
-      'white': '#fafafa'
+      'white': '#fafafa',
+      'light-purple': '#c2a3f0',
+      'purple': '#e2c4ff',
+      'dark': '#282828',
+      'lighter-dark': '#2e2e2e',
+      'gray': '#4f4f4f'
     },
     extend: {
       keyframes: {
