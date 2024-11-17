@@ -5,7 +5,6 @@ import Data from '@/app/components/data';
 import Report from '@/app/components/report';
 import Result from '@/app/components/result';
 import React, { useState, useContext, createContext } from "react";
-import { VisibilityProvider } from '../components/visibilitycontext';
 import { useVisibilityContext } from '../components/visibilitycontext';
 
 export default function DashboardPage() {

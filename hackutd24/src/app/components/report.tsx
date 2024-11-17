@@ -2,37 +2,55 @@
 import React, { useState } from "react";
 import { useVisibilityContext } from "./visibilitycontext";
 
+//QmPGB3a8g6MbjivpTVxjPHDsLrbL1sn1gQYzUvJz8wSNWY
+//"QmV1jdjrN7Cg3YJd53GVN3xvuKmkXuSADxyDcnrDhb3xGA"
 const tempCID = "QmV1jdjrN7Cg3YJd53GVN3xvuKmkXuSADxyDcnrDhb3xGA";
+const KWHCID = "QmVD9NNcvLeFTNPHeJtsYtnv2rof8nC3wH4pfeVEL27R2J"
+
+const CID = [KWHCID];
 
 const Report: React.FC = () => {
   const { isReportVisible } = useVisibilityContext();
   const [fetching, setFetching] = useState(false);
   const [files, setFiles] = useState<string[]>([]);
-
-  const fetchDataFromIPFS = async (folderCID: string) => {
+  const [file, setFile] = useState<string>();
+  
+const fetchDataFromIPFS = async (folderCID: string) => {
     setFetching(true);
-
-    // Use Pinata's public gateway
-    const gatewayUrl = `https://gateway.pinata.cloud/ipfs/${folderCID}/`;
-
+  
+    // Pinata's public gateway URL
+    const gatewayUrl = `https://salmon-managerial-hippopotamus-559.mypinata.cloud/ipfs/${folderCID}`;
+  
     try {
       const response = await fetch(gatewayUrl);
       if (!response.ok) {
         throw new Error(`Failed to fetch IPFS content: ${response.statusText}`);
       }
-
-      // Parse the response to find files if it's a directory
-      const textResponse = await response.text();
-      const regex = /href="([^"]+)"/g; // Extract links from HTML response
+  
+      // Get the response body as text (this is likely HTML content)
+      //const textResponse = await response.text();
+  
+      // Log the full HTML to examine the structure
+      //console.log(textResponse);  // Check if the content has a directory listing
+  
+      // Extract file links from the HTML using a more specific regex
+      /*const regex = /href="([^"]+\.(jpg|jpeg|png|gif|bmp|webp))"/g; // Match image file extensions
       const extractedFiles: string[] = [];
       let match;
-
+  
+      // Use a loop to find all image file links
       while ((match = regex.exec(textResponse)) !== null) {
+        // Construct the full URL of the file
         const fileUrl = `${gatewayUrl}${match[1]}`;
         extractedFiles.push(fileUrl);
-      }
-
-      setFiles(extractedFiles);
+      }*/
+  
+      // Log the extracted file URLs
+      // console.log("Extracted Files:", extractedFiles);
+  
+      // Set the state with the image file URLs
+      setFile(response.url);
+  
     } catch (error) {
       console.error("Failed to fetch files from IPFS:", error);
     } finally {
@@ -40,8 +58,9 @@ const Report: React.FC = () => {
     }
   };
 
+
   return (
-    <div className={`${isReportVisible ? "block" : "hidden"} flex-1 bg-dark`}>
+    <div className={`${isReportVisible ? "block" : "hidden"} flex-1 bg-dark h-full`}>
       <div className="overscroll-none overflow-x-hidden bg-lighter-dark sticky top-0 shadow-md w-full p-4 content-center overflow-y-hidden">
         <p className="w-full text-2xl font-bold text-center text-white">
           Report for MONTH:
@@ -50,15 +69,19 @@ const Report: React.FC = () => {
       <button
         className="border py-3 px-4 rounded-md"
         type="button"
-        disabled={fetching || !tempCID}
-        onClick={() => fetchDataFromIPFS(tempCID)}
+        disabled={fetching || !KWHCID}
+        onClick={() => fetchDataFromIPFS(KWHCID)}
       >
         {fetching ? "Fetching..." : "Get Report"}
       </button>
-
-      <div className="flex flex-wrap justify-evenly mt-4">
+      
+      <img src={file}/>
+       
+      {/*
+        <div className="flex flex-wrap justify-evenly mt-4">
         {files.length > 0 ? (
           files.map((file, index) => (
+            <div>
             <a
               key={index}
               href={file}
@@ -66,19 +89,25 @@ const Report: React.FC = () => {
               rel="noopener noreferrer"
               className="border-4 rounded-xl m-4 p-2"
             >
-              <img
-                src={file}
-                alt={`File ${index}`}
-                className="w-1/3 object-contain"
-              />
+
             </a>
+            <img
+              src={file}
+              alt={`File ${index}`}
+              className="w-1/3 object-contain"
+            />
+            </div>
+
           ))
         ) : (
           <p className="text-white mt-4">No files fetched yet.</p>
-        )}
-      </div>
+        )} 
+      </div> */}
     </div>
   );
 };
 
 export default Report;
+
+
+//https://salmon-managerial-hippopotamus-559.mypinata.cloud/ipfs/
