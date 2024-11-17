@@ -5,9 +5,9 @@ interface VisibilityContextProps {
     isTitleVisible: boolean;
     isDataVisible: boolean;
     isReportVisible: boolean;
-    toggleTitleVisibility: () => void;
-    toggleDataVisibility: () => void;
-    toggleReportVisibility: () => void;
+    toggleTitleVisibility: (value: boolean) => void;
+    toggleDataVisibility: (value: boolean) => void;
+    toggleReportVisibility: (value: boolean) => void;
 }
 
 const VisibilityContext = createContext<VisibilityContextProps | undefined>(undefined); 
@@ -17,9 +17,9 @@ export const VisibilityProvider: React.FC<{children: React.ReactNode }> = ({chil
     const [isDataVisible, setIsDataVisible] = useState<boolean>(false);
     const [isReportVisible, setIsReportVisible] = useState<boolean>(false);
 
-    const toggleTitleVisibility = () => setIsTitleVisible((prev) => !prev);
-    const toggleDataVisibility = () => setIsDataVisible((prev) => !prev);
-    const toggleReportVisibility = () => setIsReportVisible((prev => !prev));
+    const toggleTitleVisibility = (value: boolean) => setIsTitleVisible(value);
+    const toggleDataVisibility = (value: boolean) => setIsDataVisible(value);
+    const toggleReportVisibility = (value: boolean) => setIsReportVisible(value);
 
     return(
         <VisibilityContext.Provider 
