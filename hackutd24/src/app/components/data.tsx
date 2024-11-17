@@ -64,3 +64,44 @@ const Data: React.FC = () =>{
 }
 
 export default Data;
+
+
+/*
+
+    const pinImageToIPFS = async (file) => {
+
+        try {
+            //create form data
+            const formData = new FormData();
+            formData.append("file", file);
+
+            //obtain response from the fetch call (pinning form data to ipfs)
+            const response = await fetch(
+                "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${process.env.REACT_APP_PINATA_JWT}`,
+                    },
+                    body: formData
+                },
+
+            );
+
+            //if the response worked, then returns ipfs://CID
+            if (response.ok){
+                const responseData = await response.json();
+                console.log("Image pinned successfully", responseData);
+
+                const imageURL = `ipfs://${responseData.IpfsHash}`;
+                
+                return imageURL;
+
+            } else {
+                console.error("Failed to pin file", response.statusText);
+            }
+        } catch (error) {
+            console.log("Failed to upload image to IPFS: ", error);
+        }
+    }
+*/
