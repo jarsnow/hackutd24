@@ -4,8 +4,12 @@ import path from 'path';
 
 
 export default function formHandler(req: NextApiRequest, res: NextApiResponse){
+    
     if (req.method === 'POST'){
+
         const { data, filename = 'form-data.csv' } = req.body;
+
+        console.log(data);
 
         if(!data || data.length === 0) {
             return res.status(400).json({ error: 'No data provided' });
