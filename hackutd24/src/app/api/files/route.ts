@@ -1,7 +1,7 @@
 import { PinataSDK } from "pinata-web3";
 
 const pinata = new PinataSDK({
-  pinataJwt: process.env.PINATA_JWT!,
+  pinataJwt: process.env.NEXT_PUBLIC_PINATA_JWT!,
   pinataGateway: "example-gateway.mypinata.cloud",
 });
 
