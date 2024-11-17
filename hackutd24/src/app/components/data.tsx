@@ -1,8 +1,8 @@
 "use client";
-
 import React from 'react';
 import { useState } from 'react';
 import { useVisibilityContext } from "./visibilitycontext";
+import callPythonScript from './pythonscript';
 
 const Data: React.FC = () =>{
     const { isDataVisible } = useVisibilityContext();
@@ -50,14 +50,23 @@ const Data: React.FC = () =>{
 
             );
 
+            console.log(response);
+
             //if the response worked, then returns ipfs://CID
             if (response.ok){
-                const responseData = await response.json();
-                console.log("Image pinned successfully", responseData);
-
-                const imageURL = `ipfs://${responseData.IpfsHash}`;
-                
-                return imageURL;
+                try {
+                    const responseData = await response.json();
+                    console.log("Image pinned successfully", responseData);
+    
+                    const imageURL = `ipfs://${responseData.IpfsHash}`;
+    
+                    const result = await callPythonScript();
+                    console.log('Python script output:', result);
+    
+                    return imageURL;
+                } catch (error) {
+                    console.error('Error while running Python file')
+                }
 
             } else {
                 console.error("Failed to pin file", response.statusText);
@@ -68,6 +77,8 @@ const Data: React.FC = () =>{
             setUploading(false);
         }
     }
+
+
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFile(e.target?.files?.[0]);
