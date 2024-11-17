@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import { useVisibilityContext } from "./visibilitycontext";
 
-const KWHCID = "QmVD9NNcvLeFTNPHeJtsYtnv2rof8nC3wH4pfeVEL27R2J";
-const KWHWTHCID = "QmbpWer5dpCyguNpZ3aYX7dtuLCVJTUq5sbFeJcQ8CmXwX";
-const KWHCOLCID = "QmSRU357v83LfT1BPrNFaVweC1LJRBMQANkhug5U14JzwX";
-const KWHLGTCID = "QmfAeXeedwe9nz9EtX4ZCRVWPXtwYUXq1TV5WhrUrZFG9V";
-const Llama = "QmTPtMtZrSwputVwUaj1gzrJL9YWcqReaoMyjckY7jMzCv";
+const KWHCID = "QmaSVWQnoJ3TgbBTUVdQbTAQ1xuwGdsQe4QLNRUPNeUgeD";
+const KWHWTHCID = "QmX9Yr63vEqDbpom1sQp5jyhxYuUkAjKaYj72YqANzH5kZ";
+const KWHCOLCID = "Qmcdzs4W3RaRd33MCpQDWRHkGjNuSH4DP3QnThMvu3BLT7";
+const KWHLGTCID = "QmVWBsBvsgaYiQMuMphg84opCkozrcHHvSAfPT2GbS7h2F";
+const Llama = "QmbNH8RdS5FhLcVN9kdMCC6pzawrsPdzfsBbwCTWwm2oqR";
 
 const Report: React.FC = () => {
   const { isReportVisible } = useVisibilityContext();
