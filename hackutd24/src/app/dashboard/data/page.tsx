@@ -1,7 +1,6 @@
 "use client";
-
+import NavBar from '@/app/components/navbar';
 import { useState } from 'react';
-
 
 export default function DataPage() {
     const [file, setFile] = useState<File>();
@@ -37,18 +36,22 @@ export default function DataPage() {
 
 
     return (
-    
+        <div>
 
-        <main className="w-full min-h-screen m-auto flex flex-col justify-center items-center">
-                <input type="file" onChange={handleChange} />
-                <button type="button" disabled={uploading} onClick={uploadFile}>
-                    {uploading ? "Uploading..." : "Upload"}
-                </button>
-                {/* Add a conditional looking for the signed url and use it as the source */}
-                {url && <img src={url} alt="Image from Pinata" />}
-            
+            <NavBar />
 
-        </main>
+            <main className="w-full min-h-screen m-auto flex flex-col justify-center items-center">
+                    <input type="file" onChange={handleChange} />
+                    <button type="button" disabled={uploading} onClick={uploadFile}>
+                        {uploading ? "Uploading..." : "Upload"}
+                    </button>
+                    {/* Add a conditional looking for the signed url and use it as the source */}
+                    {url && <img src={url} alt="Image from Pinata" />}
+                
+
+            </main>
+
+        </div>
 
     );
 }

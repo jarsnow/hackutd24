@@ -1,16 +1,9 @@
-
-import { Box } from '@chakra-ui/react'
+import NavBar from '@/app/components/navbar';
 
 export default function ReportPage() {
-    return (
-    <Box>
-        <Box>
+    return ( 
+    
+        <NavBar />
 
-
-        </Box>
-
-        <Box>
-
-        </Box>
-    </Box>);
+    );
 }
