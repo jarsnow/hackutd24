@@ -52,6 +52,8 @@ const Data: React.FC = () =>{
             }
         } catch (error) {
             console.log("Failed to upload image to IPFS: ", error);
+        } finally {
+            setUploading(false);
         }
     }
 
@@ -62,13 +64,27 @@ const Data: React.FC = () =>{
     console.log("isDataVisible:", isDataVisible);
     return (
 
-        <div className={`${isDataVisible ? "block" : "hidden"}flex-1 bg-gray-100 p-4`}>
+        <div className={`${isDataVisible ? "block" : "hidden"}
+            flex-1 bg-gray-100 w-full min-h-screen flex flex-col overscroll-none`}>
+            
+            <div className="overscroll-none overflow-x-hidden bg-white sticky top-0 shadow-md w-full p-4 content-center overflow-y-hidden">
+                <p className="w-full text-2xl font-bold text-center">Insert Data:</p>
+            </div>
+            
+            <main className="my-5 w-full min-h-screen m-auto flex flex-col items-center overflow-y-auto space-y-8">
+                    <input className="w-full max-w-xs text-center border border-gray rounded-md p-2" type="file" onChange={handleChange} />
 
-                <p className="text-2xl font-bold">Data Here</p>
-                <main className="w-full min-h-screen m-auto flex flex-col justify-center items-center">
-                    <input type="file" onChange={handleChange} />
+                    {/* form here? */}
+                    <form>
+                        
+                    </form>
 
-                    <button type="button" disabled={uploading || !file} onClick={() => pinImageToIPFS(file!)}>
+
+                    <button 
+                        className="border py-3 px-4 rounded-md"
+                        type="button" 
+                        disabled={uploading || !file} 
+                        onClick={() => pinImageToIPFS(file!)}>
                         {uploading ? "Uploading..." : "Upload"}
                     </button>
                     {/* Add a conditional looking for the signed url and use it as the source */}
