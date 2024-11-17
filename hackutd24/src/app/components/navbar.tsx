@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx'
 import { useVisibilityContext } from './visibilitycontext';
+import Report from './report';
 
 const NavBar = () => {
 
@@ -29,7 +30,6 @@ const NavBar = () => {
 
             <div className="flex flex-col items-start">
                 {tabs.map((tab, index) => (
-                    
                 <button
                     key={index}
                     className={clsx(
@@ -37,6 +37,7 @@ const NavBar = () => {
                         activeTab === index
                         ? "bg-blue"
                         : "bg-white"
+
                     )}
                     onClick={() => handleClick(index)}>
                 {tab.name}
