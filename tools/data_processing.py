@@ -1,5 +1,6 @@
 import pandas as pd
 from pandasql import sqldf
+from groq import Groq
 import numpy
 import os
 import requests
@@ -52,14 +53,9 @@ def main(user_file_CID):
         # query user dataframe to get information about their house
         get_home_info_query = "SELECT * FROM user_dataframe;"
         home_info_res = sqldf(get_home_info_query, locals())
-        print("res:")
-        print(home_info_res)
 
-        print("home info:")
         state_name = home_info_res['state_name'][0]
         house_type = home_info_res['TYPEHUQ'][0]
-        print(f"state_name: {state_name}")
-        print(f"house_type: {house_type}")
 
         big_dataframe = pd.read_csv(tools_file_path + "recs2020_public_v7.csv")
         
@@ -78,10 +74,38 @@ def main(user_file_CID):
         # 1st row is mean
         fig, ax = plt.subplots()
 
+        try:
+            # remove info and other files
+            dir_path = "./info"
+            for filename in os.listdir(dir_path):
+                filepath = os.path.join(dir_path, filename)
+                try:
+                    if os.path.isfile(filepath):
+                        os.remove(filepath)
+                    elif os.path.isdir(filepath):
+                        shutil.rmtree(filepath)
+                except OSError as e:
+                    print(f"Error deleting {filepath}: {e}")
+
+            os.rmdir("./info")
+            os.remove("./llama_response.txt")
+        except Exception:
+            print("no llama or info txt file")
+        
+
         # make folder for plots to go in
         os.mkdir("./info")
         os.mkdir("./info/plots")
         os.mkdir("./info/data")
+
+        code_to_title = {
+            "KWH":"Total Monthly Electricity Usage",
+            "KWHWTH":"Monthly Water Heating Usage",
+            "KWHLGT":"Monthly Lighting Usage",
+            "KWHSPH":"Monthly Heating Usage",
+            "KWHCOL":"Monthly Cooling Usage",
+            "KWHRFG":"Monthly Refridgeration Usage"
+        }
 
         # use two headers
         # I apologize for this ugly nested code
@@ -106,6 +130,10 @@ def main(user_file_CID):
                     ax.axvline(x=home_info_res[category][0], color='red', linestyle='--')
                     ax.yaxis.set_visible(False)
 
+                    plt.title(code_to_title[category])
+
+                    plt.xlabel("Energy Usage (kWh)")
+
                     fig.set_figheight(3)
 
                     # save the plot
@@ -120,15 +148,49 @@ def main(user_file_CID):
         shutil.move("output_houses_data.csv", "./info/data/output_houses_data.csv")
 
         # put info on pinata
-        # Function to upload all files in a folder
         folder_path = Path("./info")
         
-        # Check if folder exists
+        # check if folder exists
         if not folder_path.is_dir():
             raise ValueError(f"{folder_path} is not a valid directory")
         
         upload_folder("./info")
 
+        # get cool ai response
+        client = Groq(
+            api_key=os.getenv("GROQ_API_KEY"),
+        )
+
+        # create prompt
+        prompt = f"""You must give advice on how users can reduce their electricity usage
+        compared to others in the same household.
+        The following information contains the monthly electricity usage in kilo-watt hours for multiple categories:
+        User's Total Electricity Usage: {str(home_info_res['KWH'][0])} Median Total Electricity Usage: {str(similar_house_data_results['KWH'][0])}
+        User's Water Heating Usage: {str(home_info_res['KWHWTH'][0])} Median Water Heating Usage: {str(similar_house_data_results['KWHWTH'][0])}
+        User's Lighting Usage: {str(home_info_res['KWHLGT'][0])} Median Lighting Usage: {str(similar_house_data_results['KWHLGT'][0])}
+        User's Heating Usage: {str(home_info_res['KWHSPH'][0])} Median Heating Usage: {str(similar_house_data_results['KWHSPH'][0])}
+        User's Cooling Usage: {str(home_info_res['KWHCOL'][0])} Median Cooling Usage: {str(similar_house_data_results['KWHCOL'][0])}
+        User's Refridgeration Usage: {str(home_info_res['KWHRFG'][0])} Median Refridgeration Usage: {str(similar_house_data_results['KWHRFG'][0])}
+        If the category is below the median, ignore it. Focus on giving tips for categories for which the user's usage is greater than the median amount.
+        """
+
+        # feed prompt to llama3
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": prompt,
+                }
+            ],
+            model="llama3-8b-8192",
+        )
+
+        # save output to file
+        with open("llama_response.txt", "w") as llama_response_file:
+            llama_response_file.write(chat_completion.choices[0].message.content)
+
+        # upload file to pinata
+        upload_file("./llama_response.txt")
 
     else:
         print(f"Error downloading the file: {response.status_code}")
@@ -185,4 +247,4 @@ def upload_file_with_retries(file_path, retries=3, delay=5):
                 raise
 
 if __name__ == "__main__":
-    main()
+    main("Qma8VQyCPqtmsT12x69C323QhT9SGMwtJTbAmGoYr3P4Us")
