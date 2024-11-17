@@ -7,7 +7,7 @@ const Report: React.FC = () => {
 
     return (
 
-        <div className={`${isReportVisible ? "block" : "hidden"} flex-1 bg-gray-100`}>
+        <div className={`${isReportVisible ? "block" : "hidden"} flex-1 bg-dark`}>
 
 <div className="overscroll-none overflow-x-hidden bg-lighter-dark sticky top-0 shadow-md w-full p-4 content-center overflow-y-hidden">
             <p className="w-full text-2xl font-bold text-center text-white">Report for MONTH:</p>
