@@ -6,12 +6,14 @@ import { useVisibilityContext } from './visibilitycontext';
 const NavBar = () => {
 
     const [activeTab, setActiveTab] = useState(0);
-    const {toggleDataVisibility, toggleTitleVisibility, toggleReportVisibility} = useVisibilityContext();
+    const {toggleDataVisibility, toggleTitleVisibility, toggleReportVisibility, toggleResultVisibility} = useVisibilityContext();
 
     const tabs = [
-        {name: "Dashboard", action: () => { toggleTitleVisibility(true); toggleDataVisibility(false); toggleReportVisibility(false); }}, 
-        {name: "Insert Data", action: () => { toggleTitleVisibility(false); toggleDataVisibility(true); toggleReportVisibility(false); }}, 
-        {name: "Report", action: () => { toggleTitleVisibility(false); toggleDataVisibility(false); toggleReportVisibility(true); }}];
+        {name: "Dashboard", action: () => { toggleTitleVisibility(true); toggleDataVisibility(false); toggleReportVisibility(false); toggleResultVisibility(false)}}, 
+        {name: "Insert Data", action: () => { toggleTitleVisibility(false); toggleDataVisibility(true); toggleReportVisibility(false); toggleResultVisibility(false)}}, 
+        {name: "Report", action: () => { toggleTitleVisibility(false); toggleDataVisibility(false); toggleReportVisibility(true); toggleResultVisibility(false)}},
+        {name: "Result", action: () => { toggleTitleVisibility(false); toggleDataVisibility(false); toggleReportVisibility(false); toggleResultVisibility(true)}}];
+
 
         const handleClick = (index: number) => {
             setActiveTab(index);

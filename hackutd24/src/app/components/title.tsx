@@ -7,11 +7,12 @@ const Title: React.FC = () => {
 
     return (
 
-        <div className={`${isTitleVisible ? "block" : "hidden"} flex-1 bg-gray-100 p-4`}>
+        <div className={`${isTitleVisible ? "block" : "hidden"} 
+        w-full flex-1 bg-gray-100 p-4 flex justify-center items-center h-full`}>
 
-                <p className="text-2xl font-bold">Title Here</p>
-
-                <p>Get Started</p>
+                <p className="animate-fadein text-2xl font-bold text-6xl">
+                    Title Here
+                </p>
 
         </div>
     );

@@ -23,7 +23,17 @@ const config: Config = {
       'blue-white': '#f2f7fa',
       'white': '#fafafa'
     },
-    extend: {},
+    extend: {
+      keyframes: {
+        fadein: {
+          from: {opacity: "0"},
+          to: {opacity: "1"}
+        }
+      },
+      animation: {
+          fadein: 'fadein 2s ease-in-out',
+      }
+    },
   },
   plugins: [],
 }
